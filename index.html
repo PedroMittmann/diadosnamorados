@@ -3,378 +3,1217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossa História de Amor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <title>Painéis de Gestão e Suporte Alpha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Bebas+Neue&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos gerais com tema clássico */
-        :root {
-            --primary-color: #a72c43; /* Vermelho vinho */
-            --secondary-color: #d39a9a; /* Rosa antigo */
-            --background-color: #fdf6f6; /* Fundo creme */
-            --text-color: #4f3c3c; /* Marrom escuro */
-            --gold-accent: #c4a35a;
-            --white-color: #fff;
-        }
-
+        /* Estilos globais para o corpo do site */
         body {
-            font-family: 'Lora', serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', sans-serif; /* Fonte padrão para o site */
+            background-color: #f0f4f8; /* Fundo cinza claro para o site */
+            color: #334155;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Container principal do site */
+        .main-site-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 2000px;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: -1;
+            margin-top: 20px;
+            overflow: hidden; /* Garante que o conteúdo não vaze */
         }
 
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-color);
-            opacity: 0.5;
-            animation: animateHeart 12s linear infinite;
-            bottom: -10%;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-color);
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -10px;
-            left: 0;
-        }
-
-        .heart::after {
-            top: 0;
-            left: -10px;
-        }
-
-        @keyframes animateHeart {
-            0% {
-                transform: translateY(0) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-150vh) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 900px;
-            width: 95%;
-            background: var(--white-color);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid #e0c9c9;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        /* Cabeçalho */
-        header h1 {
-            font-family: 'Dancing Script', cursive;
-            color: var(--primary-color);
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        /* Seção de Fotos */
-        #photos {
+        /* Estilos para a navegação (abas/botões) */
+        .nav-buttons {
             display: flex;
+            flex-wrap: wrap; /* Permite que os botões quebrem linha em telas pequenas */
             justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem;
+            gap: 10px;
+            margin-bottom: 20px; /* Ajustado para dar espaço ao timer */
+            padding: 10px;
+            background-color: #e2e8f0;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .photo-upload {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            border: 8px solid var(--white-color);
-            border-radius: 5px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        .nav-button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            background-color: #cbd5e1;
+            color: #475569;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            flex-grow: 1; /* Permite que os botões cresçam para preencher o espaço */
+            text-align: center;
+            /* Adicionado para garantir que os botões tenham uma largura mínima em telas pequenas */
+            min-width: 120px;
+        }
+
+        .nav-button:hover {
+            background-color: #94a3b8;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .nav-button.active {
+            background-color: #3b82f6; /* Azul primário */
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para as seções de conteúdo dos painéis */
+        .panel-content {
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        /* Estilos específicos para o Calendário de Plantões */
+        #panel-calendario .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #panel-calendario .day-header, #panel-calendario .calendar-day {
+            background-color: #ffffff;
+            padding: 10px 5px;
+            text-align: center;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+        #panel-calendario .day-header {
+            background-color: #cbd5e1;
+            font-weight: 600;
+            color: #334155;
+            padding: 15px 5px;
+        }
+        #panel-calendario .calendar-day.feriados {
+            background-color: #8de25b;
+        }
+        #panel-calendario .calendar-day.sabados {
+            background-color: #e0f2fe;
+        }
+        #panel-calendario .analyst-name {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        #panel-calendario .analyst-padrao { background-color: rgb(11, 104, 190); color: #ffffff; }
+        #panel-calendario .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        #panel-calendario .legend-color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        #panel-calendario .qr-code-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: #e2e8f0;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-            background: #f1f1f1;
-        }
-        
-        .photo-upload:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(167, 44, 67, 0.2);
+            font-size: 0.75rem;
+            color: #64748b;
+            text-align: center;
+            line-height: 1.2;
         }
 
-        .photo-upload img {
+        /* Estilos específicos para a Arte de Bonificação */
+        #panel-bonificacao .highlight-card {
+            background: linear-gradient(145deg, #f0f4f8, #e2e8f0);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            text-align: center;
+            max-width: 1600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #ffd700;
+            margin: 0 auto; /* Centraliza o card */
+        }
+        #panel-bonificacao .title-bebas {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #1a202c;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+        }
+        #panel-bonificacao .analyst-photo-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #ffd700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.4);
+            margin-bottom: 25px;
+            position: relative;
+            background-color: #cbd5e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #64748b;
+        }
+        #panel-bonificacao .analyst-photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
-        .photo-upload-placeholder {
-            font-size: 1rem;
-            color: #888;
-            padding: 1rem;
+        #panel-bonificacao .analyst-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: #1a202c;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .photo-upload input[type="file"] {
-            display: none;
-        }
-        
-        /* Oculta o placeholder se a imagem tiver um 'src' */
-        .photo-upload img:not([src=""]) + .photo-upload-placeholder {
-            display: none;
-        }
-        
-        /* Mostra o placeholder se a imagem não tiver 'src' */
-         .photo-upload img[src=""] + .photo-upload-placeholder {
-            display: block;
-        }
-
-
-        /* Seção Declaração */
-        #declaration {
-            margin-bottom: 2.5rem;
-        }
-        
-        h2 {
-            font-family: 'Dancing Script', cursive;
-            color: var(--secondary-color);
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+        #panel-bonificacao .score-box {
+            background-color: #ffd700;
+            color: #1a202c;
+            padding: 15px 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 1.8rem;
             font-weight: 700;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
         }
-
-        textarea#love-letter {
-            width: calc(100% - 40px);
-            min-height: 180px;
-            padding: 20px;
-            border: 1px solid #e0c9c9;
-            border-radius: 5px;
-            background-color: #fdfbfb;
-            font-family: 'Lora', serif;
+        #panel-bonificacao .criteria-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
             font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--text-color);
-            resize: vertical;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #475569;
+            text-align: left;
+            width: 100%;
+            max-width: 400px;
+        }
+        #panel-bonificacao .criteria-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        #panel-bonificacao .criteria-list li::before {
+            content: '✨';
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        #panel-bonificacao .ranking-section {
+            background-color: #cbd5e1;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #panel-bonificacao .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        #panel-bonificacao .ranking-item:last-child {
+            border-bottom: none;
+        }
+        #panel-bonificacao .ranking-item .position {
+            font-weight: 700;
+            color: #1a202c;
+            width: 30px;
+            text-align: left;
+        }
+        #panel-bonificacao .ranking-item .name {
+            flex-grow: 1;
+            text-align: left;
+            margin-left: 10px;
+            color: #334155;
+        }
+        #panel-bonificacao .ranking-item .score {
+            font-weight: 700;
+            color: #475569;
         }
 
-        textarea#love-letter:focus {
-            outline: none;
-            border-color: var(--gold-accent);
-            box-shadow: 0 0 10px rgba(196, 163, 90, 0.2);
+        /* Estilos específicos para o Fluxo de Atendimento */
+        #panel-fluxo .flow-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 1600px;
+            width: 100%;
+            overflow-x: auto;
+            margin: 0 auto; /* Centraliza o container */
+        }
+        #panel-fluxo .flow-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        #panel-fluxo .flow-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        #panel-fluxo .flow-subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+        }
+        #panel-fluxo .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            padding-bottom: 20px;
+        }
+        #panel-fluxo .flow-step {
+            flex-shrink: 0;
+            width: 340px;
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin: 0 15px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #panel-fluxo .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        #panel-fluxo .flow-step-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        #panel-fluxo .flow-step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+        #panel-fluxo .flow-step-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        #panel-fluxo .step-start {
+            background-color: #dcfce7;
+            border: 2px solid #22c55e;
+        }
+        #panel-fluxo .step-in-progress {
+            background-color: #ffedd5;
+            border: 2px solid #f97316;
+        }
+        #panel-fluxo .step-resolved {
+            background-color: #dbeafe;
+            border: 2px solid #3b82f6;
+        }
+        #panel-fluxo .arrow {
+            flex-shrink: 0;
+            font-size: 3rem;
+            color: #94a3b8;
+            margin: 0 -5px;
         }
 
-        /* Seção Contador */
-        #counter {
-            background-color: var(--primary-color);
-            color: var(--white-color);
-            padding: 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        /* Estilos específicos para o Painel de Implantações */
+        #panel-implantacoes-main .dashboard-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto; /* Centraliza o container */
         }
-
-        #time-together {
+        #panel-implantacoes-main .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #panel-implantacoes-main .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        #panel-implantacoes-main .dashboard-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+        #panel-implantacoes-main .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        #panel-implantacoes-main .company-card {
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        #panel-implantacoes-main .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        #panel-implantacoes-main .company-logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #475569;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+        #panel-implantacoes-main .company-name {
             font-size: 1.4rem;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        #panel-implantacoes-main .analyst-info {
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 15px;
+        }
+        #panel-implantacoes-main .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        #panel-implantacoes-main .status-badge.in-progress {
+            background-color: #bfdbfe;
+            color: #1e40af;
+        }
+        #panel-implantacoes-main .status-badge.finalizing {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        #panel-implantacoes-main .status-badge .icon {
+            margin-right: 6px;
+            font-size: 1rem;
         }
 
-        /* Responsividade */
+        /* Estilos para o timer */
+        .timer-display {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Estilos para o cabeçalho com logos e nome da empresa */
+        .header-container {
+            width: 100%;
+            display: flex;
+            justify-content: start; /* Logos à esquerda, texto à direita */
+            align-items: end;
+            padding: 20px 40px;
+            background-color: #ffffff;
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+            flex-wrap: wrap; /* Permite que os elementos quebrem linha em telas menores */
+            gap: 20px; /* Espaçamento entre os grupos de elementos no cabeçalho */
+        }
+
+        /* Grupo de logos */
+        .logo-group {
+            display: flex;
+            gap: 20px; /* Reduzido o gap para melhor adaptação em telas menores */
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* Estilo para as imagens dos logos */
+        .logo-tech {
+            max-height: 80px; /* Altura máxima para as logos */
+            width: auto;
+            flex-shrink: 1; /* Permite que as logos diminuam */
+            border-radius: 12px;
+            filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.08));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo-tech:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.12));
+        }
+
+        /* Nome da empresa no cabeçalho */
+        .company-name {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem); /* Tamanho de fonte responsivo */
+            font-weight: 600;
+            color: #1e293b;
+            text-align: right;
+            flex-grow: 1; /* Permite que o nome da empresa ocupe o espaço restante */
+            min-width: 150px; /* Largura mínima para o nome da empresa */
+        }
+
+        /* Responsividade geral para telas menores */
         @media (max-width: 768px) {
-            header h1 {
+            .main-site-container {
+                padding: 10px;
+            }
+            .nav-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                min-width: unset; /* Remove a largura mínima para permitir mais flexibilidade */
+            }
+            .panel-content {
+                padding: 15px;
+            }
+
+            /* Calendário */
+            #panel-calendario .calendar-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+            #panel-calendario .day-header, #panel-calendario .calendar-day {
+                min-height: 70px;
+                padding: 5px 2px;
+                font-size: 0.8rem;
+            }
+            #panel-calendario .analyst-name {
+                font-size: 0.65rem;
+                padding: 2px 5px;
+            }
+            #panel-calendario .qr-code-placeholder {
+                width: 50px;
+                height: 50px;
+                font-size: 0.5rem;
+            }
+
+            /* Bonificação */
+            #panel-bonificacao .highlight-card {
+                padding: 20px;
+            }
+            #panel-bonificacao .title-bebas {
                 font-size: 3rem;
             }
+            #panel-bonificacao .analyst-photo-container {
+                width: 120px;
+                height: 120px;
+            }
+            #panel-bonificacao .analyst-name {
+                font-size: 2.5rem;
+            }
+            #panel-bonificacao .score-box {
+                font-size: 1.4rem;
+                padding: 10px 20px;
+            }
+            #panel-bonificacao .criteria-list {
+                font-size: 0.95rem;
+            }
+            #panel-bonificacao .ranking-section {
+                padding: 15px;
+            }
+            #panel-bonificacao .ranking-item {
+                font-size: 0.9rem;
+            }
 
-            .photo-upload {
-                width: 200px;
-                height: 200px;
+            /* Fluxo de Atendimento */
+            #panel-fluxo .flow-container {
+                padding: 20px;
             }
-            
-            #time-together {
-                font-size: 1.2rem;
+            #panel-fluxo .flow-title {
+                font-size: 2rem;
             }
-        }
-
-        @media (max-width: 500px) {
-            .container {
-                padding: 1.5rem;
-                width: 90%;
+            #panel-fluxo .flow-subtitle {
+                font-size: 1rem;
             }
-            #photos {
+            #panel-fluxo .flow-steps {
                 flex-direction: column;
                 align-items: center;
             }
-            header h1 {
-                font-size: 2.5rem;
+            #panel-fluxo .flow-step {
+                width: 90%;
+                max-width: 280px;
+                margin: 10px 0;
             }
-            h2 {
-                font-size: 2.2rem;
+            #panel-fluxo .arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
             }
-             #time-together {
+
+            /* Implantações */
+            #panel-implantacoes-main .dashboard-container {
+                padding: 20px;
+            }
+            #panel-implantacoes-main .dashboard-title {
+                font-size: 2rem;
+            }
+            #panel-implantacoes-main .dashboard-subtitle {
                 font-size: 1rem;
+            }
+            #panel-implantacoes-main .company-grid {
+                grid-template-columns: 1fr;
+            }
+            #panel-implantacoes-main .company-card {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            .logo-group {
+                justify-content: center; /* Centraliza logos quando em coluna */
+                width: 100%;
+                gap: 15px;
+            }
+
+            .logo-tech {
+                max-height: 60px; /* Reduz ainda mais o tamanho da logo em telas muito pequenas */
+            }
+
+            .company-name {
+                text-align: center; /* Centraliza o nome da empresa */
+                width: 100%;
+                font-size: clamp(1.2rem, 5vw, 2rem);
+            }
+
+            .nav-buttons {
+                flex-direction: column; /* Botões de navegação em coluna em telas muito pequenas */
+                gap: 8px;
+            }
+
+            .nav-button {
+                width: 100%; /* Botões ocupam a largura total */
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="hearts-container"></div>
 
-    <main class="container">
-        <header>
-            <h1>Nossa História de Amor</h1>
-        </header>
+    <div class="main-site-container">
+        <div class="header-container">
+            <a href="https://alphasoftware.com.br/" target="_blank">
+                <img src="/static/img/logoalpha.png" alt="Logo Alpha" class="logo-tech" 
+             onerror="this.src='https://placehold.co/200x120/f1f5f9/94a3b8?text=Alpha'">
 
-        <section id="photos">
-            <label for="photo1-input" class="photo-upload">
-                <img id="photo1-preview" src="https://images.unsplash.com/photo-1542337829-44047e704a29?w=500&auto=format&fit=crop" alt="Foto do casal 1">
-                <span class="photo-upload-placeholder">Clique para alterar a foto</span>
-                <input type="file" id="photo1-input" accept="image/*">
-            </label>
-            <label for="photo2-input" class="photo-upload">
-                <img id="photo2-preview" src="https://images.unsplash.com/photo-1502411252324-6e04543a2993?w=500&auto=format&fit=crop" alt="Foto do casal 2">
-                <span class="photo-upload-placeholder">Clique para alterar a foto</span>
-                <input type="file" id="photo2-input" accept="image/*">
-            </label>
+            </a>
+            <h1 class="text-4xl font-bold text-end mb-4 text-gray-800 ">Painéis de Gestão e Suporte Alpha - 05/2025</h1>
+        </div>
+        <!-- <div class="header-container"> -->
+    <!-- <div class="logo-group">
+        
+        <img src="img/logoagro.jpg" alt="Logo Agro" class="logo-tech"
+             onerror="this.src='https://placehold.co/200x120/f1f5f9/94a3b8?text=Agro'">
+    </div> -->
+
+<!-- </div> -->
+        
+
+        <nav class="nav-buttons">
+            <button class="nav-button" data-panel-id="panel-calendario">Calendário de Plantões</button>
+            <button class="nav-button" data-panel-id="panel-bonificacao">Analista Destaque</button>
+            <button class="nav-button" data-panel-id="panel-fluxo">Fluxo de Atendimento</button>
+            <button class="nav-button" data-panel-id="panel-implantacoes-main">Painel de Implantações</button>
+        </nav>
+
+        <div id="timer-display" class="timer-display">Próxima aba em: 10 segundos</div>
+
+        <section id="panel-calendario" class="panel-content hidden">
+            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Calendário de Plantões – Apenas Sábados</h2>
+
+            <div class="mb-10">
+                <h3 class="text-2xl font-semibold text-center mb-4 text-gray-700">Maio 2025</h3>
+                <div class="calendar-grid">
+                    <div class="day-header">Dom</div>
+                    <div class="day-header">Seg</div>
+                    <div class="day-header">Ter</div>
+                    <div class="day-header">Qua</div>
+                    <div class="day-header">Qui</div>
+                    <div class="day-header">Sex</div>
+                    <div class="day-header weekend">Sáb</div>
+
+                    <div class="calendar-day text-gray-400">27</div>
+                    <div class="calendar-day text-gray-400">28</div>
+                    <div class="calendar-day text-gray-400">29</div>
+                    <div class="calendar-day text-gray-400">30</div>
+                    <div class="calendar-day text-gray-400">1</div>
+                    <div class="calendar-day text-gray-400">2</div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">3</span>
+                        <span class="analyst-name analyst-padrao">Geneses</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">4</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">5</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">6</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">7</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">8</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">9</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">10</span>
+                        <span class="analyst-name analyst-padrao">Gustavo</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">11</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">12</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">13</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">14</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">15</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">16</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">17</span>
+                        <span class="analyst-name analyst-padrao">Hebert</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">18</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">19</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">20</div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">21</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">22</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">23</span>
+                    </div>
+                    <div class="calendar-day weekend feriados">
+                        <span class="font-bold text-lg">24</span>
+                        <span class="analyst-name analyst-padrao">Feriado Municipal Padroeira | Tec. Geneses </span>
+
+                    </div>
+                        
+
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">25</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">26</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">27</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">28</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">29</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">30</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">31</span>
+                        <span class="analyst-name analyst-padrao">Luiz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h3 class="text-2xl font-semibold text-center mb-4 text-gray-700">Junho 2025</h3>
+                <div class="calendar-grid">
+                    <div class="day-header">Dom</div>
+                    <div class="day-header">Seg</div>
+                    <div class="day-header">Ter</div>
+                    <div class="day-header">Qua</div>
+                    <div class="day-header">Qui</div>
+                    <div class="day-header">Sex</div>
+                    <div class="day-header weekend">Sáb</div>
+
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">1</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">2</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">3</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">4</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">5</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">6</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">7</span>
+                        <span class="analyst-name analyst-padrao">Pedro</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">8</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">9</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">10</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">11</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">12</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">13</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">14</span>
+                        <span class="analyst-name analyst-padrao">Thiago</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">15</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">16</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">17</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">18</span>
+                    </div>
+                    <div class="calendar-day weekend feriados">
+                        <span class="font-bold text-lg">19</span>
+                        <span class="analyst-name analyst-padrao">Feriado Corpus Christi - Ponto Facultativo</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">20</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">21</span>
+                        <span class="analyst-name analyst-padrao">Edmilson</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">22</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">23</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">24</span>
+                    </div>
+                    
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">25</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">26</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">27</span>
+                    </div>
+                    <div class="calendar-day weekend sabados">
+                        <span class="font-bold text-lg">28</span>
+                        <span class="analyst-name analyst-padrao">Geneses</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">29</span>
+                    </div>
+                    <div class="calendar-day">
+                        <span class="font-bold text-lg">30</span>
+                    </div>
+                </div>
+            </div>
+
+            
         </section>
 
-        <section id="declaration">
-            <h2>Para Meu Amor</h2>
-            <textarea id="love-letter" placeholder="Escreva aqui o que seu coração sente...">Meu amor, desde o momento em que nossos caminhos se cruzaram, cada dia ao seu lado tem sido uma página de um conto de fadas que eu não sabia que estava vivendo. Em seu sorriso, encontro meu lar. Em seus braços, encontro minha paz. Você transformou meu mundo com a mais pura e bela forma de amor. Que nosso tempo juntos continue a ser contado em infinitos momentos de felicidade. Eu te amo, hoje e para sempre.</textarea>
+        <section id="panel-bonificacao" class="panel-content hidden">
+    <div class="highlight-card">
+        <h2 class="title-bebas text-5xl md:text-6xl mb-6 text-center">🏆Analista Destaque do Mês🏆</h2>
+
+        <div class="analyst-photo-container text-center mb-4">
+            <img src="static/img/luiz.png" alt="Foto do Analista Destaque"
+                 onerror="this.src='https://placehold.co/180x180/cbd5e1/64748b?text=FOTO'" class="mx-auto">
+        </div>
+
+        <h3 class="analyst-name text-4xl md:text-5xl text-center">Luiz Boldrini</h3>
+        <p class="text-lg text-gray-600 text-center mb-4">Parabéns pelo seu excelente desempenho!</p>
+
+        <div class="score-box text-center mb-6">
+            
+            <strong>Pontuação Total:</strong> 40,50% Entrega
+        </div>
+
+        <!-- Container em Flex para exibir Critérios e Ranking lado a lado -->
+        <div class="flex flex-col md:flex-row gap-8 justify-between">
+            <!-- Principais Critérios -->
+            <div class="criteria-list flex-1">
+                <h4 class="text-xl font-bold mb-3 text-gray-800">Principais Critérios:</h4>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>20% | Fechamento de tickets e Lançamentos de Treinamentos</li>
+                    <li>20% | Acessos ao Curso no EAD e Documentação da Versão</li>
+                    <li>20% | Criação de Artigos, documentos e vídeos</li>
+                    <li>20% | Feedback e indicações de contratações</li>
+                    <li>20% | Avaliação de clientes e produtividade do Neo Code</li>
+                </ul>
+            </div>
+
+            <!-- Ranking -->
+            <div class="ranking-section flex-1">
+                <h4 class="text-xl font-bold mb-4 text-gray-800 text-center md:text-left">Ranking Geral (Top 5)</h4>
+                <div class="space-y-2 text-gray-700">
+                    <div class="ranking-item flex justify-between">
+                        <span class="position font-semibold">1º</span>
+                        <span class="name">Luiz Boldrini</span>
+                        <span class="score font-semibold">40,50%</span>
+                    </div>
+                    <div class="ranking-item flex justify-between">
+                        <span class="position">2º</span>
+                        <span class="name">Geneses Souza</span>
+                        <span class="score">40,00%</span>
+                    </div>
+                    <div class="ranking-item flex justify-between">
+                        <span class="position">3º</span>
+                        <span class="name">Heberth Diego</span>
+                        <span class="score">30,50%</span>
+                    </div>
+                    <div class="ranking-item flex justify-between">
+                        <span class="position">4º</span>
+                        <span class="name">Edmilson Junior</span>
+                        <span class="score">30,00%</span>
+                    </div>
+                    <div class="ranking-item flex justify-between">
+                        <span class="position">5º</span>
+                        <span class="name">Gustavo</span>
+                        <span class="score">20,00%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <section id="panel-fluxo" class="panel-content hidden">
+            <div class="flow-container">
+                <header class="flow-header">
+                    <h2 class="flow-title">Nosso Fluxo de Atendimento</h2>
+                    <p class="flow-subtitle">Clareza e Eficiência no Suporte</p>
+                </header>
+
+                <div class="flow-steps">
+                    <div class="flow-step step-start">
+                        <div class="flow-step-icon">📧</div> <h3 class="flow-step-title">1. Abertura de Chamado</h3>
+                        <p class="flow-step-description">O cliente registra sua solicitação via portal, e-mail ou telefone.</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="flow-step step-in-progress">
+                        <div class="flow-step-icon">🔍</div> <h3 class="flow-step-title">2. Triagem Inicial</h3>
+                        <p class="flow-step-description">A equipe de suporte avalia a natureza e urgência do chamado.</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="flow-step step-in-progress">
+                        <div class="flow-step-icon">🏷️</div> <h3 class="flow-step-title">3. Classificação</h3>
+                        <p class="flow-step-description">O chamado é categorizado como urgente ou comum, priorizando o atendimento.</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="flow-step step-in-progress">
+                        <div class="flow-step-icon">➡️</div> <h3 class="flow-step-title">4. Encaminhamento</h3>
+                        <p class="flow-step-description">O chamado é direcionado ao analista mais adequado para a resolução.</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="flow-step step-resolved">
+                        <div class="flow-step-icon">💬</div> <h3 class="flow-step-title">5. Atendimento e Resolução</h3>
+                        <p class="flow-step-description">O analista interage com o cliente e trabalha na solução do problema.</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="flow-step step-resolved">
+                        <div class="flow-step-icon">✅</div> <h3 class="flow-step-title">6. Encerramento e Feedback</h3>
+                        <p class="flow-step-description">Após a solução, o chamado é encerrado e o feedback do cliente é coletado.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="counter">
-            <h2>Construindo nossa história há...</h2>
-            <div id="time-together">Calculando nosso tempo de amor...</div>
+        <section id="panel-implantacoes-main" class="panel-content hidden">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <h2 class="dashboard-title">Painel de Implantações em Andamento</h2>
+                    <p class="dashboard-subtitle">Acompanhe o status das nossas implantações ativas.</p>
+                </header>
+
+                <div class="company-grid">
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">
+                                <img src="static/img/estrela.png" alt="LOGO"
+                 onerror="this.src='https://placehold.co/180x180/cbd5e1/64748b?text=FOTO'" class="company-logo-placeholder"> 
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="company-name">JC Distribuidora Estrela</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">Pedro</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge in-progress">
+                                <span class="icon">⏳</span> Em Andamento
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">
+                                <img src="static/img/cgerr.png" alt="LOGO"
+                 onerror="this.src='https://placehold.co/180x180/cbd5e1/64748b?text=FOTO'" class="company-logo-placeholder">
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="company-name">CGERR Cooperativa de Energia</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">Pedro</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge in-progress">
+                                <span class="icon">⏳</span> EM ANDAMENTO
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">LOGO</div>
+                            <div class="ml-4">
+                                <h3 class="company-name">Nome da Emprea ...</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">...</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge in-progress">
+                                <span class="icon">✅</span> status...
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">LOGO</div>
+                            <div class="ml-4">
+                                <h3 class="company-name">Nome da Emprea ...</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">...</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge finalizing">
+                                <span class="icon">✅</span> status...
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">LOGO</div>
+                            <div class="ml-4">
+                                <h3 class="company-name">Nome da Emprea ...</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">...</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge in-progress">
+                                <span class="icon">✅</span> status...
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="flex items-start mb-4">
+                            <div class="company-logo-placeholder">LOGO</div>
+                            <div class="ml-4">
+                                <h3 class="company-name">Nome da Emprea ...</h3>
+                                <p class="analyst-info">Analista Responsável: <span class="font-semibold">...</span></p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="status-badge in-progress">
+                                <span class="icon">✅</span> status...
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-    </main>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- CONFIGURAÇÃO INICIAL ---
-            // IMPORTANTE: Altere esta data para o início do seu relacionamento!
-            // Formato: Ano, Mês (0-11), Dia, Hora, Minuto, Segundo
-            const dataInicioRelacionamento = new Date(2020, 4, 20, 18, 30, 0); // Exemplo: 20 de Maio de 2020, 18:30
+        // Array com os IDs dos painéis na ordem desejada
+        const panelIds = ['panel-calendario', 'panel-bonificacao', 'panel-fluxo', 'panel-implantacoes-main'];
+        let currentPanelIndex = 0; // Índice do painel atualmente visível
+        const intervalTime = 10000; // Tempo em milissegundos (10 segundos)
+        let autoSlideInterval; // Variável para armazenar o ID do setInterval de troca automática
+        let countdownTimer; // Variável para armazenar o ID do setInterval do contador regressivo
+        let remainingTime = intervalTime / 1000; // Tempo restante para a próxima troca, em segundos
 
-            // --- LÓGICA DE UPLOAD DE FOTOS ---
-            function setupPhotoUpload(inputId, previewId) {
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
+        // Elemento HTML onde o timer será exibido
+        const timerDisplay = document.getElementById('timer-display');
 
-                input.addEventListener('change', event => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = e => {
-                            preview.src = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
+        // Função para atualizar a exibição do timer
+        function updateTimerDisplay() {
+            timerDisplay.textContent = `Próxima aba em: ${remainingTime} segundos`;
+        }
+
+        // Função para iniciar o ciclo de troca automática e o timer
+        function startAutoSlide() {
+            // Limpa quaisquer intervalos existentes para evitar duplicação
+            clearInterval(autoSlideInterval);
+            clearInterval(countdownTimer);
+
+            // Reinicia o tempo restante
+            remainingTime = intervalTime / 1000;
+            updateTimerDisplay(); // Atualiza a exibição imediatamente
+
+            // Inicia o contador regressivo
+            countdownTimer = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
+                if (remainingTime <= 0) {
+                    // Quando o tempo acaba, chama a função para a próxima aba
+                    nextPanel();
+                }
+            }, 1000); // Atualiza a cada 1 segundo
+
+            // Inicia o intervalo principal para a troca de painéis
+            autoSlideInterval = setInterval(nextPanel, intervalTime);
+        }
+
+        // Função para mostrar um painel específico e ativar seu botão de navegação
+        function showPanel(panelId) {
+            // Esconde todos os painéis de conteúdo
+            const panels = document.querySelectorAll('.panel-content');
+            panels.forEach(panel => {
+                panel.classList.add('hidden');
+            });
+
+            // Remove a classe 'active' de todos os botões de navegação
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Mostra o painel selecionado
+            document.getElementById(panelId).classList.remove('hidden');
+
+            // Ativa o botão de navegação correspondente ao painel
+            const activeButton = document.querySelector(`.nav-button[data-panel-id="${panelId}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+
+            // Atualiza o índice do painel atual para que o ciclo automático continue a partir daqui
+            currentPanelIndex = panelIds.indexOf(panelId);
+
+            // Reinicia o ciclo automático e o timer para a aba recém-selecionada
+            startAutoSlide();
+        }
+
+        // Função para alternar para o próximo painel
+        function nextPanel() {
+            // Incrementa o índice do painel, voltando ao início se chegar ao fim
+            currentPanelIndex = (currentPanelIndex + 1) % panelIds.length;
+            // Mostra o próximo painel (isso também reiniciará o timer)
+            showPanel(panelIds[currentPanelIndex]);
+        }
+
+        // Adiciona event listeners para os botões de navegação
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const panelId = this.getAttribute('data-panel-id');
+                    showPanel(panelId); // Chama showPanel ao clicar no botão
                 });
-            }
+            });
 
-            setupPhotoUpload('photo1-input', 'photo1-preview');
-            setupPhotoUpload('photo2-input', 'photo2-preview');
-
-            // --- LÓGICA DO CONTADOR DE RELACIONAMENTO ---
-            const timeTogetherElement = document.getElementById('time-together');
-
-            function atualizarContador() {
-                const agora = new Date();
-                let diff = agora - dataInicioRelacionamento;
-
-                const segundosTotal = Math.floor(diff / 1000);
-                const minutosTotal = Math.floor(segundosTotal / 60);
-                const horasTotal = Math.floor(minutosTotal / 60);
-                
-                let dataTemp = new Date(dataInicioRelacionamento);
-                
-                let anos = agora.getFullYear() - dataTemp.getFullYear();
-                let meses = agora.getMonth() - dataTemp.getMonth();
-                let dias = agora.getDate() - dataTemp.getDate();
-
-                if (dias < 0) {
-                    meses--;
-                    const ultimoDiaDoMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
-                    dias += ultimoDiaDoMesAnterior;
-                }
-
-                if (meses < 0) {
-                    anos--;
-                    meses += 12;
-                }
-                
-                const semanas = Math.floor(dias / 7);
-                dias = dias % 7;
-
-                const horas = horasTotal % 24;
-                const minutos = minutosTotal % 60;
-                const segundos = segundosTotal % 60;
-
-                let resultado = [];
-                if (anos > 0) resultado.push(`${anos} ${anos > 1 ? 'anos' : 'ano'}`);
-                if (meses > 0) resultado.push(`${meses} ${meses > 1 ? 'meses' : 'mês'}`);
-                if (semanas > 0) resultado.push(`${semanas} ${semanas > 1 ? 'semanas' : 'semana'}`);
-                if (dias > 0) resultado.push(`${dias} ${dias > 1 ? 'dias' : 'dia'}`);
-                if (horas > 0) resultado.push(`${horas} ${horas > 1 ? 'horas' : 'hora'}`);
-                if (minutos > 0) resultado.push(`${minutos} ${minutos > 1 ? 'minutos' : 'minuto'}`);
-                resultado.push(`${segundos} ${segundos > 1 ? 'segundos' : 'segundo'}`);
-
-                timeTogetherElement.textContent = resultado.join(', ').replace(/,([^,]*)$/, ' e$1');
-            }
-            
-            setInterval(atualizarContador, 1000);
-            atualizarContador();
-
-            // --- LÓGICA PARA CRIAR CORAÇÕES ANIMADOS ---
-            const heartsContainer = document.querySelector('.hearts-container');
-            function createHeart() {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 7 + 5 + 's'; // Duração entre 5s e 12s
-                heartsContainer.appendChild(heart);
-
-                setTimeout(() => {
-                    heart.remove();
-                }, 12000); // Remove o coração depois que a animação termina
-            }
-
-            setInterval(createHeart, 600); 
+            // Garante que o primeiro painel esteja visível e o ciclo automático inicie ao carregar a página
+            showPanel(panelIds[currentPanelIndex]);
         });
     </script>
 </body>
