@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos gerais com tema clássico */
+        :root {
+            --primary-color: #a72c43; /* Vermelho vinho */
+            --secondary-color: #d39a9a; /* Rosa antigo */
+            --background-color: #fdf6f6; /* Fundo creme */
+            --text-color: #4f3c3c; /* Marrom escuro */
+            --gold-accent: #c4a35a;
+            --white-color: #fff;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            opacity: 0.5;
+            animation: animateHeart 12s linear infinite;
+            bottom: -10%;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes animateHeart {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-150vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            width: 95%;
+            background: var(--white-color);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #e0c9c9;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Cabeçalho */
+        header h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        /* Seção de Fotos */
+        #photos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .photo-upload {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            border: 8px solid var(--white-color);
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            background: #f1f1f1;
+        }
+        
+        .photo-upload:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(167, 44, 67, 0.2);
+        }
+
+        .photo-upload img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-upload-placeholder {
+            font-size: 1rem;
+            color: #888;
+            padding: 1rem;
+        }
+
+        .photo-upload input[type="file"] {
+            display: none;
+        }
+        
+        /* Oculta o placeholder se a imagem tiver um 'src' */
+        .photo-upload img:not([src=""]) + .photo-upload-placeholder {
+            display: none;
+        }
+        
+        /* Mostra o placeholder se a imagem não tiver 'src' */
+         .photo-upload img[src=""] + .photo-upload-placeholder {
+            display: block;
+        }
+
+
+        /* Seção Declaração */
+        #declaration {
+            margin-bottom: 2.5rem;
+        }
+        
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        textarea#love-letter {
+            width: calc(100% - 40px);
+            min-height: 180px;
+            padding: 20px;
+            border: 1px solid #e0c9c9;
+            border-radius: 5px;
+            background-color: #fdfbfb;
+            font-family: 'Lora', serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            resize: vertical;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        textarea#love-letter:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 10px rgba(196, 163, 90, 0.2);
+        }
+
+        /* Seção Contador */
+        #counter {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #time-together {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 3rem;
+            }
+
+            .photo-upload {
+                width: 200px;
+                height: 200px;
+            }
+            
+            #time-together {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 1.5rem;
+                width: 90%;
+            }
+            #photos {
+                flex-direction: column;
+                align-items: center;
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+             #time-together {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-container"></div>
+
+    <main class="container">
+        <header>
+            <h1>Nossa História de Amor</h1>
+        </header>
+
+        <section id="photos">
+            <label for="photo1-input" class="photo-upload">
+                <img id="photo1-preview" src="https://images.unsplash.com/photo-1542337829-44047e704a29?w=500&auto=format&fit=crop" alt="Foto do casal 1">
+                <span class="photo-upload-placeholder">Clique para alterar a foto</span>
+                <input type="file" id="photo1-input" accept="image/*">
+            </label>
+            <label for="photo2-input" class="photo-upload">
+                <img id="photo2-preview" src="https://images.unsplash.com/photo-1502411252324-6e04543a2993?w=500&auto=format&fit=crop" alt="Foto do casal 2">
+                <span class="photo-upload-placeholder">Clique para alterar a foto</span>
+                <input type="file" id="photo2-input" accept="image/*">
+            </label>
+        </section>
+
+        <section id="declaration">
+            <h2>Para Meu Amor</h2>
+            <textarea id="love-letter" placeholder="Escreva aqui o que seu coração sente...">Meu amor, desde o momento em que nossos caminhos se cruzaram, cada dia ao seu lado tem sido uma página de um conto de fadas que eu não sabia que estava vivendo. Em seu sorriso, encontro meu lar. Em seus braços, encontro minha paz. Você transformou meu mundo com a mais pura e bela forma de amor. Que nosso tempo juntos continue a ser contado em infinitos momentos de felicidade. Eu te amo, hoje e para sempre.</textarea>
+        </section>
+
+        <section id="counter">
+            <h2>Construindo nossa história há...</h2>
+            <div id="time-together">Calculando nosso tempo de amor...</div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- CONFIGURAÇÃO INICIAL ---
+            // IMPORTANTE: Altere esta data para o início do seu relacionamento!
+            // Formato: Ano, Mês (0-11), Dia, Hora, Minuto, Segundo
+            const dataInicioRelacionamento = new Date(2020, 4, 20, 18, 30, 0); // Exemplo: 20 de Maio de 2020, 18:30
+
+            // --- LÓGICA DE UPLOAD DE FOTOS ---
+            function setupPhotoUpload(inputId, previewId) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+
+                input.addEventListener('change', event => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            preview.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            setupPhotoUpload('photo1-input', 'photo1-preview');
+            setupPhotoUpload('photo2-input', 'photo2-preview');
+
+            // --- LÓGICA DO CONTADOR DE RELACIONAMENTO ---
+            const timeTogetherElement = document.getElementById('time-together');
+
+            function atualizarContador() {
+                const agora = new Date();
+                let diff = agora - dataInicioRelacionamento;
+
+                const segundosTotal = Math.floor(diff / 1000);
+                const minutosTotal = Math.floor(segundosTotal / 60);
+                const horasTotal = Math.floor(minutosTotal / 60);
+                
+                let dataTemp = new Date(dataInicioRelacionamento);
+                
+                let anos = agora.getFullYear() - dataTemp.getFullYear();
+                let meses = agora.getMonth() - dataTemp.getMonth();
+                let dias = agora.getDate() - dataTemp.getDate();
+
+                if (dias < 0) {
+                    meses--;
+                    const ultimoDiaDoMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+                    dias += ultimoDiaDoMesAnterior;
+                }
+
+                if (meses < 0) {
+                    anos--;
+                    meses += 12;
+                }
+                
+                const semanas = Math.floor(dias / 7);
+                dias = dias % 7;
+
+                const horas = horasTotal % 24;
+                const minutos = minutosTotal % 60;
+                const segundos = segundosTotal % 60;
+
+                let resultado = [];
+                if (anos > 0) resultado.push(`${anos} ${anos > 1 ? 'anos' : 'ano'}`);
+                if (meses > 0) resultado.push(`${meses} ${meses > 1 ? 'meses' : 'mês'}`);
+                if (semanas > 0) resultado.push(`${semanas} ${semanas > 1 ? 'semanas' : 'semana'}`);
+                if (dias > 0) resultado.push(`${dias} ${dias > 1 ? 'dias' : 'dia'}`);
+                if (horas > 0) resultado.push(`${horas} ${horas > 1 ? 'horas' : 'hora'}`);
+                if (minutos > 0) resultado.push(`${minutos} ${minutos > 1 ? 'minutos' : 'minuto'}`);
+                resultado.push(`${segundos} ${segundos > 1 ? 'segundos' : 'segundo'}`);
+
+                timeTogetherElement.textContent = resultado.join(', ').replace(/,([^,]*)$/, ' e$1');
+            }
+            
+            setInterval(atualizarContador, 1000);
+            atualizarContador();
+
+            // --- LÓGICA PARA CRIAR CORAÇÕES ANIMADOS ---
+            const heartsContainer = document.querySelector('.hearts-container');
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 7 + 5 + 's'; // Duração entre 5s e 12s
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 12000); // Remove o coração depois que a animação termina
+            }
+
+            setInterval(createHeart, 600); 
+        });
+    </script>
+</body>
+</html>
